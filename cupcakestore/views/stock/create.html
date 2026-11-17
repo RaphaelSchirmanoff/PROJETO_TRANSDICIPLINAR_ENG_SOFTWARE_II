@@ -1,0 +1,37 @@
+<div class="content-header">
+    <div class="container">
+        <a href="/stock" class="text-muted">← Estoque</a>
+        <h1 class="mt-2">Movimentar estoque</h1>
+        <p class="text-muted">Registre a entrada ou a saída de unidades de um produto.</p>
+    </div>
+</div>
+<section class="content">
+    <div class="container" data-product-picker>
+        <form method="post" action="/stock/create" id="stockForm" class="card">
+            <input type="hidden" name="_csrf" autocomplete="off" value="{{ .CSRFToken }}">
+            <div class="card-body">
+                {{template "stock/product-picker" .}}
+                <hr>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="type">Tipo de movimentação</label>
+                        <select class="form-control" id="type" name="type" required>
+                            <option value="entrada">Entrada de estoque</option>
+                            <option value="saída">Saída de estoque</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="quantity">Quantidade de unidades</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity"
+                               min="1" step="1" value="1" required disabled data-product-quantity>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between flex-wrap">
+                <a href="/stock" class="btn btn-default">Cancelar</a>
+                <button type="submit" class="btn btn-primary" disabled data-product-submit>Registrar movimentação</button>
+            </div>
+        </form>
+        <noscript><p>Ative o JavaScript para buscar e selecionar o produto.</p></noscript>
+    </div>
+</section>

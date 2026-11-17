@@ -1,0 +1,63 @@
+<div class="content-header">
+    <div class="container d-flex justify-content-between align-items-start flex-wrap">
+        <div>
+            <h1>Produtos</h1>
+            <p class="text-muted">Preços, disponibilidade e estoque do catálogo.</p>
+        </div>
+        <a href="/products/create" class="btn btn-primary mb-3">Adicionar produto</a>
+    </div>
+</div>
+<section class="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-body border-bottom">
+                <form method="get" action="/products" role="search">
+                    <input type="hidden" name="limit" value="{{.Object.Filter.Pagination.Limit}}">
+                    <label for="q">Buscar no catálogo</label>
+                    <div class="input-group">
+                        <input type="search" class="form-control" id="q" name="q" value="{{.Object.Filter.Product.Name}}"
+                               placeholder="Nome ou descrição do produto">
+                        <div class="input-group-append"><button type="submit" class="btn btn-outline-primary">Buscar</button></div>
+                    </div>
+                    {{if .Object.Filter.Product.Name}}<a href="/products" class="d-inline-block mt-2">Limpar busca</a>{{end}}
+                </form>
+            </div>
+            <div class="table-responsive" tabindex="0" role="region" aria-label="Catálogo de produtos; role horizontalmente para ver todas as colunas">
+                <table class="table table-hover mb-0">
+                    <caption class="sr-only">Produtos cadastrados</caption>
+                    <thead><tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Estoque</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ações</th>
+                    </tr></thead>
+                    <tbody>
+                    {{range .Object.Products}}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img class="rounded mr-3" src="{{if .Image}}{{.Image}}{{else}}/images/600x400.svg{{end}}"
+                                     alt="" width="48" height="48" loading="lazy">
+                                <div><a href="/products/{{.ID}}"><strong>{{.Name}}</strong></a><br>
+                                    <small class="text-muted">#{{.ID}} · {{abbrev 45 .Description}}</small></div>
+                            </div>
+                        </td>
+                        <td class="text-nowrap">{{money .Price}}</td>
+                        <td>{{.CurrentStock}}</td>
+                        <td><span class="badge {{if .IsActive}}badge-success{{else}}badge-secondary{{end}}">{{if .IsActive}}Ativo{{else}}Inativo{{end}}</span></td>
+                        <td class="text-nowrap">
+                            <a href="/products/{{.ID}}" class="btn btn-outline-primary btn-sm" aria-label="Editar {{.Name}}">Editar</a>
+                            <a href="/stock/{{.ID}}" class="btn btn-default btn-sm" aria-label="Ver estoque de {{.Name}}">Estoque</a>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr><td colspan="5" class="text-center text-muted py-5">Nenhum produto encontrado. {{if .Object.Filter.Product.Name}}Tente outro termo de busca.{{else}}Adicione o primeiro produto para começar.{{end}}</td></tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+            {{template "snippets/pagination" (dict "Pagination" .Object.Filter.Pagination "Query" .Object.Filter.Product.Name)}}
+        </div>
+    </div>
+</section>

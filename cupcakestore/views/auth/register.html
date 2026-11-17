@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff9f2">
+    <title>Criar sua conta | Cupcake Store</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/ui.css">
+    <script src="/js/ui.js" defer></script>
+</head>
+<body class="ui-auth">
+<a class="ui-skip" href="#main-content">Pular para o conteúdo</a>
+<header class="ui-auth-header">
+    <a class="ui-brand" href="/store"><img src="/dist/img/logo.png" width="36" height="40" alt=""><span>Cupcake <strong>Store</strong></span></a>
+    <a class="ui-back-link" href="/store">← Voltar à loja</a>
+</header>
+<main class="ui-auth-layout" id="main-content">
+    <section class="ui-auth-story" aria-labelledby="welcome-title">
+        <span class="ui-eyebrow">CHEGUE MAIS</span>
+        <h1 id="welcome-title">Seu próximo<br>momento doce<br>começa aqui.</h1>
+        <p>Crie sua conta para escolher seus cupcakes e acompanhar cada pedido.</p>
+        <div class="ui-auth-illustration" aria-hidden="true"><img src="/dist/img/logo.png" width="132" height="145" alt=""></div>
+    </section>
+    <section class="ui-auth-card" aria-labelledby="register-title">
+        <span class="ui-eyebrow">BEM-VINDO À CUPCAKE STORE</span>
+        <h2 id="register-title">Vamos nos conhecer?</h2>
+        <p class="ui-muted">Preencha seus dados para criar uma conta.</p>
+        <form action="/auth/register" id="registrationForm" method="post" class="ui-form" data-password-confirmation>
+            <input type="hidden" name="_csrf" autocomplete="off" value="{{.CSRFToken}}">
+            <div class="ui-field-row">
+                <div class="ui-field"><label for="firstname">Nome <span class="ui-optional">(opcional)</span></label><input id="firstname" name="firstname" type="text" autocomplete="given-name" maxlength="100"></div>
+                <div class="ui-field"><label for="lastname">Sobrenome <span class="ui-optional">(opcional)</span></label><input id="lastname" name="lastname" type="text" autocomplete="family-name" maxlength="100"></div>
+            </div>
+            <div class="ui-field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="username" maxlength="100" placeholder="voce@exemplo.com" required></div>
+            <div class="ui-field">
+                <label for="password">Senha</label>
+                <div class="ui-password">
+                    <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" aria-describedby="password-help" required>
+                    <button type="button" data-password-toggle="password" aria-controls="password" aria-pressed="false" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+                <small id="password-help">Use pelo menos 8 caracteres.</small>
+            </div>
+            <div class="ui-field">
+                <label for="password2">Confirmar senha</label>
+                <input id="password2" type="password" autocomplete="new-password" minlength="8" aria-describedby="passwordError" required>
+                <small id="passwordError" class="ui-field-error" role="alert" hidden>As senhas precisam ser iguais.</small>
+            </div>
+            <button class="ui-button ui-button-primary ui-button-full" type="submit">Criar minha conta <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="ui-auth-switch">Já tem uma conta? <a href="/auth/login">Entrar</a></p>
+    </section>
+</main>
+<footer class="ui-auth-footer">Cupcake Store <span aria-hidden="true">·</span> Uma pausa doce no seu dia.</footer>
+{{template "snippets/message" .}}
+</body>
+</html>

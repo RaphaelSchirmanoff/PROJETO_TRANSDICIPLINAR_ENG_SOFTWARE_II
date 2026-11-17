@@ -1,0 +1,47 @@
+<div class="content-header">
+    <div class="container">
+        <a href="/stock" class="text-muted">← Estoque</a>
+        <h1 class="mt-2">Histórico de movimentações</h1>
+        <p class="text-muted">Entradas e saídas do produto #{{.Object.Filter.Stock.ProductID}}.</p>
+    </div>
+</div>
+<section class="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                <h2 class="h5 mb-0">Movimentações</h2>
+                <a href="/products/{{.Object.Filter.Stock.ProductID}}" class="btn btn-outline-primary btn-sm">Ver produto</a>
+            </div>
+            <div class="table-responsive" tabindex="0" role="region" aria-label="Movimentações de estoque; role horizontalmente para ver todas as colunas">
+                <table class="table table-hover mb-0">
+                    <caption class="sr-only">Histórico de entradas e saídas de estoque</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">Movimentação</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Data</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range .Object.Stocks}}
+                    <tr>
+                        <td>#{{.ID}}</td>
+                        <td><a href="/products/{{.ProductID}}">{{if .Product.Name}}{{.Product.Name}}{{else}}Produto #{{.ProductID}}{{end}}</a></td>
+                        <td class="{{if lt .Quantity 0}}text-danger{{end}}">{{if ge .Quantity 0}}+{{end}}{{.Quantity}}</td>
+                        <td><span class="badge {{if eq .Type "entrada"}}badge-success{{else}}badge-secondary{{end}}">{{.Type}}</span></td>
+                        <td>{{if .Profile.User.Email}}<a href="/users/user/{{.Profile.UserID}}">{{.Profile.User.Email}}</a>{{else}}Usuário indisponível{{end}}</td>
+                        <td class="text-nowrap">{{.CreatedAt | date "02/01/2006 15:04"}}</td>
+                    </tr>
+                    {{else}}
+                    <tr><td colspan="6" class="text-center text-muted py-5">Nenhuma movimentação encontrada.</td></tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+            {{template "snippets/pagination" (dict "Pagination" .Object.Filter.Pagination "Query" "")}}
+        </div>
+    </div>
+</section>

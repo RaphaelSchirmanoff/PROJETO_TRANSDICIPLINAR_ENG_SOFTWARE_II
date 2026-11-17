@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff9f2">
+    <title>Cupcake Store | Escolha seu próximo doce</title>
+    <link href="/plugins/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/dist/css/adminlte.min.css" rel="stylesheet">
+    <link href="/css/ui.css" rel="stylesheet">
+    <link href="/css/storefront.css" rel="stylesheet">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/storefront.js" defer></script>
+</head>
+<body class="storefront" {{if .Profile}}data-authenticated="true"{{end}}>
+<a class="store-skip" href="#main-content">Pular para o conteúdo</a>
+<header class="store-header">
+    <div class="store-container store-header-inner">
+        <a class="store-brand" href="/store" aria-label="Cupcake Store, início">
+            <img src="/dist/img/logo.png" alt="" width="42" height="42">
+            <span>Cupcake<span class="store-brand-light"> Store</span></span>
+        </a>
+        <nav class="store-nav" aria-label="Navegação principal">
+            <a href="/store" data-nav="store">Vitrine</a>
+            <a href="/orders" data-nav="orders">Meus pedidos</a>
+            {{if .Profile}}
+            <a href="/profile/{{.Profile.User.ID}}" data-nav="profile" title="{{.Profile.User.Email}}">Minha conta</a>
+            {{if .Profile.User.IsStaff}}<a href="/dashboard">Admin</a>{{end}}
+            <form action="/auth/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{.CSRFToken}}">
+                <button type="submit" class="store-nav-button">Sair</button>
+            </form>
+            {{else}}
+            <a href="/auth/login">Entrar</a>
+            {{end}}
+            <a href="/cart" class="store-cart-link" data-nav="cart">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 7h14l-2 9H8L5 3H2M9 20h.01M17 20h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Carrinho <span id="cart-count" class="store-cart-count" aria-label="Itens no carrinho">0</span>
+            </a>
+        </nav>
+    </div>
+</header>
+<main id="main-content" class="store-main" tabindex="-1">
+    {{embed}}
+</main>
+{{template "snippets/message" .}}
+<footer class="store-footer">
+    <div class="store-container store-footer-inner">
+        <a class="store-brand" href="/store">Cupcake<span class="store-brand-light"> Store</span></a>
+        <p>Um doce momento, do seu jeito.</p>
+        <a href="https://github.com/bitebait/cupcakestore" target="_blank" rel="noopener noreferrer">Conheça o projeto <span aria-hidden="true">↗</span></a>
+    </div>
+</footer>
+</body>
+</html>

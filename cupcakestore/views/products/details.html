@@ -1,0 +1,20 @@
+<div class="store-container store-page">
+    <nav class="store-breadcrumb" aria-label="Você está em"><a href="/store">Vitrine</a><span aria-hidden="true">/</span><span>{{.Object.Name}}</span></nav>
+    <article class="store-product-detail">
+        <div class="store-detail-image"><img src="{{if .Object.Image}}{{.Object.Image}}{{else}}/images/cupcake-placeholder.svg{{end}}" alt="{{.Object.Name}}" width="600" height="600"></div>
+        <div class="store-detail-content">
+            <p class="store-eyebrow">Seu próximo doce momento</p>
+            <h1>{{.Object.Name}}</h1>
+            <p class="store-detail-description">{{.Object.Description}}</p>
+            <p class="store-price store-detail-price">{{money .Object.Price}}<small>/ unidade</small></p>
+            <div class="store-ingredients"><h2>O que tem por aqui</h2><p>{{.Object.Ingredients}}</p></div>
+            {{if gt .Object.CurrentStock 0}}
+            <p class="store-field-label">Quantos vão deixar o seu dia mais doce?</p>
+            {{template "snippets/cart" (dict "Product" .Object "CSRFToken" .CSRFToken "Profile" .Profile)}}
+            {{else}}
+            <p class="store-notice" role="status">Este produto está sem estoque no momento.</p>
+            {{end}}
+            <a href="/store" class="store-back-link">← Continuar explorando a vitrine</a>
+        </div>
+    </article>
+</div>

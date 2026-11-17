@@ -1,0 +1,46 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+/certs/
+/backups/
+
+# Local databases and SQLite transaction files
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Go binaries, test output and local workspaces
+/cupcakestore
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+go.work.sum
+
+# Uploaded product photos
+/web/images/*.jpeg
+/web/images/*.jpg
+/web/images/*.webp
+
+# Legacy compression caches (current Fiber configuration uses memory)
+*.fiber.gz
+*.fiber.br
+*.fiber.zst
+*.fasthttp.gz
+*.fasthttp.br

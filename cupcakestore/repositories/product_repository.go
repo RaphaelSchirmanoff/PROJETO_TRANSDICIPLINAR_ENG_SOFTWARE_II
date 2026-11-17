@@ -1,0 +1,111 @@
+package repositories
+
+import (
+	"github.com/bitebait/cupcakestore/models"
+	"gorm.io/gorm"
+	"log/slog"
+)
+
+type ProductRepository interface {
+	Create(product *models.Product) error
+	FindAll(filter *models.ProductFilter) []models.Product
+	FindActiveWithStock(filter *models.ProductFilter) []models.Product
+	FindById(id uint) (models.Product, error)
+	Update(product *models.Product) error
+	Delete(product *models.Product) error
+}
+
+type productRepository struct {
+	db *gorm.DB
+}
+
+func NewProductRepository(db *gorm.DB) ProductRepository {
+	return &productRepository{db: db}
+}
+
+func (r *productRepository) Create(product *models.Product) error {
+	if err := r.db.Create(product).Error; err != nil {
+		slog.Error("ProductRepository Create", "error", err)
+		return err
+	}
+
+	return nil
+}
+
+func (r *productRepository) FindAll(filter *models.ProductFilter) []models.Product {
+	return r.findProducts(filter, "")
+}
+
+func (r *productRepository) FindActiveWithStock(filter *models.ProductFilter) []models.Product {
+	return r.findProducts(filter, "is_active = TRUE AND current_stock > 0")
+}
+
+func (r *productRepository) findProducts(filter *models.ProductFilter, additionalCondition string) []models.Product {
+	query := r.db.Model(&models.Product{})
+
+	if additionalCondition != "" {
+		query = query.Where(additionalCondition)
+	}
+
+	if filter.Product.Name != "" {
+		filterPattern := "%" + filter.Product.Name + "%"
+		query = query.Where("(name LIKE ? OR description LIKE ?)", filterPattern, filterPattern)
+	}
+
+	var total int64
+	if err := query.Count(&total).Error; err != nil {
+		slog.Error("ProductRepository findProducts", "error", err)
+		return nil
+	}
+	filter.Pagination.Total = total
+
+	var products []models.Product
+	offset := (filter.Pagination.Page - 1) * filter.Pagination.Limit
+	if err := query.Offset(offset).Limit(filter.Pagination.Limit).Order("created_at desc").Find(&products).Error; err != nil {
+		slog.Error("ProductRepository findProducts", "error", err)
+		return nil
+	}
+
+	return products
+}
+
+func (r *productRepository) FindById(id uint) (models.Product, error) {
+	var product models.Product
+	err := r.db.First(&product, id).Error
+
+	if err != nil {
+		slog.Error("ProductRepository FindOrCreateById", "error", err)
+	}
+
+	return product, err
+}
+
+func (r *productRepository) Update(product *models.Product) error {
+	if product == nil || product.ID == 0 {
+		return gorm.ErrRecordNotFound
+	}
+	if err := product.Validate(); err != nil {
+		return err
+	}
+	result := r.db.Model(product).Where("id = ?", product.ID).
+		Select("Name", "Description", "Price", "Ingredients", "Image", "Thumbnail", "IsActive").
+		Updates(product)
+	if result.Error != nil {
+		err := result.Error
+		slog.Error("ProductRepository Update", "error", err)
+		return err
+	}
+	if result.RowsAffected != 1 {
+		return gorm.ErrRecordNotFound
+	}
+	return nil
+}
+
+func (r *productRepository) Delete(product *models.Product) error {
+	if err := r.db.Delete(product).Error; err != nil {
+		slog.Error("ProductRepository Delete", "error", err)
+		return err
+	}
+
+	return nil
+}

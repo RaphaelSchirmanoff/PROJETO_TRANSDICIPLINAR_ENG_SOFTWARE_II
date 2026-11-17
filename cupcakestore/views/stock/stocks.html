@@ -1,0 +1,23 @@
+<div class="content-header">
+    <div class="container d-flex justify-content-between align-items-start flex-wrap">
+        <div>
+            <h1>Estoque</h1>
+            <p class="text-muted">Consulte o saldo e o histórico de cada produto.</p>
+        </div>
+        <a href="/stock/create" class="btn btn-primary mb-3">Movimentar estoque</a>
+    </div>
+</div>
+<section class="content">
+    <div class="container" data-product-picker>
+        <div class="card">
+            <div class="card-body">
+                {{template "stock/product-picker" .}}
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" data-product-history hidden>Ver histórico do produto</a>
+                <a href="/products" class="btn btn-default">Ver todos os produtos</a>
+            </div>
+        </div>
+        <noscript><p>Ative o JavaScript para buscar um produto ou acesse seu histórico pela lista de produtos.</p></noscript>
+    </div>
+</section>

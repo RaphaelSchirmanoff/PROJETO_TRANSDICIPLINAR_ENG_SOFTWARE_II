@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#35241f">
+    <title>Cupcake Store | Administração</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/css/ui.css">
+    <script src="/js/ui.js" defer></script>
+    <script src="/js/admin.js" defer></script>
+</head>
+<body class="ui-admin">
+<a class="ui-skip" href="#main-content">Pular para o conteúdo</a>
+<div class="ui-admin-shell">
+    <header class="ui-admin-header">
+        <button class="ui-menu-button" type="button" data-admin-toggle aria-controls="admin-navigation" aria-expanded="false">
+            <span aria-hidden="true">☰</span> Menu
+        </button>
+        <span class="ui-eyebrow">Seu ateliê, organizado.</span>
+        <a class="ui-store-link" href="/store">Visitar a loja <span aria-hidden="true">↗</span></a>
+    </header>
+    <aside class="ui-admin-sidebar" id="admin-navigation">
+        <a class="ui-brand ui-brand-light" href="/dashboard">
+            <img src="/dist/img/logo.png" width="40" height="44" alt="">
+            <span>Cupcake <strong>Store</strong><small>PAINEL DA LOJA</small></span>
+        </a>
+        <nav aria-label="Administração" class="ui-admin-nav">
+            <p class="ui-nav-label">Dia a dia</p>
+            <a href="/dashboard"><i class="fas fa-chart-line" aria-hidden="true"></i> Visão geral</a>
+            <a href="/orders"><i class="fas fa-receipt" aria-hidden="true"></i> Pedidos</a>
+            <details open>
+                <summary><i class="fas fa-cookie-bite" aria-hidden="true"></i> Produtos</summary>
+                <a href="/products">Catálogo de produtos</a>
+                <a href="/products/create">Adicionar produto</a>
+            </details>
+            <details>
+                <summary><i class="fas fa-box" aria-hidden="true"></i> Estoque</summary>
+                <a href="/stock">Movimentações</a>
+                <a href="/stock/create">Gerenciar estoque</a>
+            </details>
+            <p class="ui-nav-label">Sua loja</p>
+            <details>
+                <summary><i class="fas fa-users" aria-hidden="true"></i> Pessoas</summary>
+                <a href="/users">Usuários cadastrados</a>
+                <a href="/users/create">Adicionar usuário</a>
+            </details>
+            <details>
+                <summary><i class="fas fa-sliders-h" aria-hidden="true"></i> Configurações</summary>
+                <a href="/config/address">Endereço e contato</a>
+                <a href="/config/delivery">Entrega</a>
+                <a href="/config/payment">Formas de pagamento</a>
+                <a href="/config/pix">Pix</a>
+            </details>
+        </nav>
+        <div class="ui-admin-account">
+            <span class="ui-nav-label">Sua conta</span>
+            <a href="/users/user/{{.Profile.UserID}}">{{.Profile.User.Email}}</a>
+            <form action="/auth/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{.CSRFToken}}">
+                <button type="submit" class="ui-logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Sair da conta</button>
+            </form>
+        </div>
+    </aside>
+    <main id="main-content" class="ui-admin-main" tabindex="-1">{{embed}}</main>
+    <footer class="ui-admin-footer">
+        <span>Cupcake Store <span aria-hidden="true">·</span> Feito para cuidar da sua loja.</span>
+        <a href="https://github.com/bitebait/cupcakestore" target="_blank" rel="noopener noreferrer">Projeto no GitHub</a>
+    </footer>
+</div>
+{{template "snippets/message" .}}
+</body>
+</html>

@@ -1,0 +1,19 @@
+<div class="content-header">
+    <div class="container">
+        <a href="/products" class="text-muted">← Produtos</a>
+        <h1 class="mt-2">Adicionar produto</h1>
+        <p class="text-muted">Cadastre as informações que aparecerão na loja.</p>
+    </div>
+</div>
+<section class="content">
+    <div class="container">
+        <form method="post" action="/products/create" enctype="multipart/form-data" class="card">
+            <input type="hidden" name="_csrf" autocomplete="off" value="{{ .CSRFToken }}">
+            <div class="card-body">{{template "products/form-fields" .}}</div>
+            <div class="card-footer d-flex justify-content-between flex-wrap">
+                <a href="/products" class="btn btn-default">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Adicionar produto</button>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,29 @@
+{{$query := .Query}}
+{{with .Pagination}}
+<nav class="ui-pagination" aria-label="Paginação">
+    <span>Página {{.Page}} de {{max 1 .TotalPages}} · {{.Total}} resultado(s)</span>
+    <ul class="pagination">
+        {{if gt .Page 1}}
+        <li class="page-item">
+            <a class="page-link" aria-label="Página anterior" href="?page={{sub .Page 1}}&amp;limit={{.Limit}}&amp;q={{$query}}">«</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{sub .Page 1}}&amp;limit={{.Limit}}&amp;q={{$query}}">{{sub .Page 1}}</a>
+        </li>
+        {{else}}
+        <li class="page-item disabled"><span class="page-link" aria-hidden="true">«</span></li>
+        {{end}}
+        <li class="page-item active" aria-current="page"><span class="page-link"><strong>{{.Page}}</strong></span></li>
+        {{if lt .Page .TotalPages}}
+        <li class="page-item">
+            <a class="page-link" href="?page={{add .Page 1}}&amp;limit={{.Limit}}&amp;q={{$query}}">{{add .Page 1}}</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" aria-label="Próxima página" href="?page={{add .Page 1}}&amp;limit={{.Limit}}&amp;q={{$query}}">»</a>
+        </li>
+        {{else}}
+        <li class="page-item disabled"><span class="page-link" aria-hidden="true">»</span></li>
+        {{end}}
+    </ul>
+</nav>
+{{end}}

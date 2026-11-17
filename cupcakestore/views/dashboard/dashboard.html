@@ -1,0 +1,59 @@
+<div class="content-header">
+    <div class="container">
+        <h1>Visão geral</h1>
+        <p class="text-muted">Acompanhe a loja e acesse as tarefas do dia a dia.</p>
+    </div>
+</div>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h6 text-muted">Pedidos recentes</h2>
+                        <p class="h2">{{.Object.NewOrders}}</p>
+                        <a href="/orders">Ver pedidos →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h6 text-muted">Pedidos concluídos</h2>
+                        <p class="h2">{{.Object.CompletedOrders}}</p>
+                        <a href="/orders">Ver entregas e retiradas →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h6 text-muted">Usuários cadastrados</h2>
+                        <p class="h2">{{.Object.Users}}</p>
+                        <a href="/users">Ver usuários →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h6 text-muted">Produtos cadastrados</h2>
+                        <p class="h2">{{.Object.Products}}</p>
+                        <a href="/products">Ver produtos →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-muted mt-3">Pedidos criados nos últimos 30 dias, exceto cancelados. Concluídos são os que já foram entregues ou retirados.</p>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2 class="h5">Gerenciar a loja</h2>
+                <div class="d-flex flex-wrap">
+                    <a href="/products/create" class="btn btn-primary mr-2 mb-2">Adicionar produto</a>
+                    <a href="/stock/create" class="btn btn-outline-primary mr-2 mb-2">Movimentar estoque</a>
+                    <a href="/orders" class="btn btn-default mb-2">Acompanhar pedidos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

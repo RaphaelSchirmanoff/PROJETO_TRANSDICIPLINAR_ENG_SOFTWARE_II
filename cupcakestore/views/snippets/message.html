@@ -1,0 +1,16 @@
+{{if or .Messages.Error .Messages.Success}}
+<div class="ui-notifications" aria-label="Mensagens">
+    {{if .Messages.Error}}
+    <div class="ui-notice ui-notice-error" id="message-error" role="alert">
+        <div><strong>Não foi possível concluir.</strong><p>{{.Messages.Error}}</p></div>
+        <button type="button" data-dismiss-message aria-label="Fechar mensagem de erro">×</button>
+    </div>
+    {{end}}
+    {{if .Messages.Success}}
+    <div class="ui-notice ui-notice-success" id="message-success" role="status">
+        <div><strong>Tudo certo!</strong><p>{{.Messages.Success}}</p></div>
+        <button type="button" data-dismiss-message aria-label="Fechar mensagem de sucesso">×</button>
+    </div>
+    {{end}}
+</div>
+{{end}}

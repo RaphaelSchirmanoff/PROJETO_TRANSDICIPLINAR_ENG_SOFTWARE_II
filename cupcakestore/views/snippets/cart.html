@@ -1,0 +1,10 @@
+{{if .Profile}}
+<form action="/cart" method="post" class="store-add-form">
+    <input type="hidden" name="_csrf" value="{{.CSRFToken}}">
+    <input type="hidden" name="id" value="{{.Product.ID}}">
+    {{template "snippets/quantity" (dict "Product" .Product "Quantity" 1)}}
+    <button type="submit" class="store-button store-button-primary">Adicionar <span class="store-add-long">ao carrinho</span><span aria-hidden="true"> +</span></button>
+</form>
+{{else}}
+<a href="/auth/login" class="store-button store-button-secondary store-button-wide store-login-to-buy">Entrar para comprar →</a>
+{{end}}

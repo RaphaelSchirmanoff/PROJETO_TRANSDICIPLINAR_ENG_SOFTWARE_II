@@ -1,0 +1,22 @@
+<div class="content-header">
+    <div class="container">
+        <a href="/products/{{.Object.ID}}" class="text-muted">← Voltar ao produto</a>
+        <h1 class="mt-2">Excluir produto</h1>
+    </div>
+</div>
+<section class="content">
+    <div class="container">
+        <div class="card card-outline card-danger">
+            <div class="card-body">
+                <h2 class="h4">Excluir {{.Object.Name}}?</h2>
+                <p>O produto #{{.Object.ID}} será removido do catálogo. O histórico de pedidos e movimentações será mantido.</p>
+                <p class="text-muted">Para suspender as vendas temporariamente, você pode desativar o produto na tela de edição.</p>
+                <form method="post" action="/products/delete/{{.Object.ID}}" class="d-flex justify-content-between flex-wrap">
+                    <input type="hidden" name="_csrf" autocomplete="off" value="{{ .CSRFToken }}">
+                    <a href="/products/{{.Object.ID}}" class="btn btn-default">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
