@@ -20,6 +20,10 @@ Abra `http://localhost:8080`. Banco e fotos ficam em volumes persistentes. Para 
 
 ## Como rodar o projeto *local* com Go?
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d303329 (Atualiza documentação do projeto)
 Navegue até a pasta do projeto:
 ~~~sh
 cd cupcakestore/
