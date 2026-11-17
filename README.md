@@ -20,11 +20,6 @@ Abra `http://localhost:8080`. Banco e fotos ficam em volumes persistentes. Para 
 
 ## Como rodar o projeto *local* com Go?
 
-Clone o repositório:
-~~~sh
-git clone https://github.com/bitebait/cupcakestore.git
-~~~
-
 Navegue até a pasta do projeto:
 ~~~sh
 cd cupcakestore/
